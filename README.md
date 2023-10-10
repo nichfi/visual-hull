@@ -18,7 +18,7 @@ You can install these libraries using `pip` or any other package manager.
 ## Usage
 
 1. Clone this repository to your local machine or download the script.
-2. Modify the script's configuration parameters according to your specific requirements, including folder paths, camera calibration parameters, and scaling factors.
+2. Modify the script's configuration parameters according to your specific requirements, ex. folder paths, the camera calibration parameters are default tuned to the '3_10oneplus(object_filmcan_photo)', and scaling factors are true for all of the included object images 9/10/23.
 3. Ensure that you have a set of images in the specified folder path, and the image filenames match the specified pattern.
 4. Run the script using Python:
 
