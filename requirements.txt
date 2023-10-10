@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Oct  9 19:56:30 2023
+
+@author: skippy
+"""
+
+opencv-contrib-python==4.6.0.66
+opencv-python==4.7.0.72
+numpy==1.25.2
+matplotlib==3.7.0
+gmsh==4.11.1
