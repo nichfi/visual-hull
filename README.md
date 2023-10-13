@@ -18,7 +18,7 @@ You can install these libraries using `pip` or any other package manager.
 ## Joose Usage 13/10
 
 1. Clone this repository to your local machine.
-2. Specific directions for Vis_Hull_2.0 and Checker_Calib_1.3.7 are included in english within the document, they are all that needs to be used.  Although the Vis_Hull already contains the correct output from the Checker_Calib file.
+2. Specific directions for Vis_Hull_2.0 and Checker_Calib_1.3.7 are included in english within the document, and within the first ~65 lines.  Although the Vis_Hull already contains the correct output from the Checker_Calib file.
 3. Ensure that you have a set of images in the specified folder path, and the image filenames match the specified pattern.
 4. Run the scripts and check for printed results.
 
