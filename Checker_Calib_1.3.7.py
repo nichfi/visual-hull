@@ -9,20 +9,31 @@ import os
 import numpy as np
 import cv2 as cv
 import glob
+'''
+*PLEASE CHECK single quotes for directions throughout the initial
+part of the doc*
 
-CHESSBOARD_WIDTH = 9  # 9
-CHESSBOARD_HEIGHT = 6   # 6
+Parameters 
+'''
+# these are to suit the checkerboards included in 'oneplus(NUMBER)' and 
+# SA73(NUMBER) files with 3_10, do not change for now
+
+CHESSBOARD_WIDTH = 15  # Chessboard dimensions
+CHESSBOARD_HEIGHT = 10   #
 RESIZE_IMAGES = True
 SCALING = .4
-
 debugmode = 0
+chess_size = 16  # previously 26.47
 
-chess_size = 26.47
 
+'''
+Add your path to 'oneplus(NUMBER)' to the IMAGES variable, 
+use the * to include all image files within the parent folder.
+(ie IMG*)  This will use create a calibration location
+'''
 
+# This is the only thing to change on this document as of 13/10 
 IMAGES = glob.glob('C:/Users/skippy/.spyder-py3/Calibration_2023-09-1914_34_50/frame*')
-#IMAGES = glob.glob('hook_data/iPhone/Calibration/IMG*')
-
 print(IMAGES)
 
 
