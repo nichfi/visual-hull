@@ -22,7 +22,7 @@ debug_mode = 0
 
 
 '''
-These are the only two variables that should be changed with the 
+These are the only two variables that need to be changed with the 
 current repo. Add the folder path with 'object' and 'oneplus' to 
 the path, imagename should be a shared initial portion of a string
 followed by the star. (ie IMG*)
