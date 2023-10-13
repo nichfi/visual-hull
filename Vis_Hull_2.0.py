@@ -6,24 +6,37 @@ import os
 import gmsh as msh
 import sys
 import logging
-
 '''
-Parameters
+*PLEASE CHECK single quotes for directions throughout the initial
+part of the doc*
+
+Parameters (do not change these for now)
 '''
 
 msh.initialize(sys.argv)
 projection_list = [] 
-aruco_scale = 56.76
-LC = 20 #for GMSH
-SCALING = 0.4
+aruco_scale = 56.76 # size of aruco markers 
+LC = 20 # resolution for GMSH vertices - only relevant for boolean
+SCALING = 0.4 # iamge pixel dimension multiplier
 debug_mode = 0
 
 
-#define folder path and image name pattern 
+'''
+These are the only two variables that should be changed with the 
+current repo. Add the folder path with 'object' and 'oneplus' to 
+the path, imagename should be a shared initial portion of a string
+followed by the star. (ie IMG*)
+'''
 folder_path = 'C:/Users/skippy/Downloads/'
 imagename_pattern = 'IMG_20231002_034*'
 
 
+
+'''
+This is the CMTX and DIST that are obtained from the calib.py file in
+the repo, currently they are set to work with all github files 
+including the name'oneplus'.  To recreate, go to the checker calib file
+'''
 
 CMTX = np.array([738.4391110895575, 0.0, 391.10649709357614, 0.0,
                  737.6804692382966, 516.2104937135692, 0.0, 0.0, 1.0], 
@@ -33,6 +46,11 @@ DIST = np.array([-0.028550282679872235, -0.01788452651293315,
                  0.5017724257813853], dtype='float32')
 
 
+'''
+These are the the real world coordinates for aruco corner locations 
+in mm.  These are set to work with all github files including the 
+name 'object'
+'''
 aruco_points = {
     39: np.array([[32.5,-32.5,-2.5],[32.5,32.5,-2.5],[32.5,-32.5,-62.5],
                   [32.5,32.5,-62.5]], dtype='float32'),
