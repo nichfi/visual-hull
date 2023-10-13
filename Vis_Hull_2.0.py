@@ -35,9 +35,11 @@ imagename_pattern = 'IMG_20231002_034*'
 '''
 This is the CMTX and DIST that are obtained from the calib.py file in
 the repo, currently they are set to work with all github files 
-including the name'oneplus'.  To recreate, go to the checker calib file
+including the name'oneplus'.  To recreate, go to the checker calib file.
+
 '''
 
+# Current CMTX and DIST found using 9x6 checkerboard.
 CMTX = np.array([738.4391110895575, 0.0, 391.10649709357614, 0.0,
                  737.6804692382966, 516.2104937135692, 0.0, 0.0, 1.0], 
                 dtype='float32').reshape(3, 3)
