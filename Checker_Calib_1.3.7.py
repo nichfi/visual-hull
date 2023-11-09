@@ -33,7 +33,7 @@ use the * to include all image files within the parent folder.
 '''
 
 # This is the only thing to change on this document as of 13/10 
-IMAGES = glob.glob('C:/Users/skippy/.spyder-py3/Calibration_2023-09-1914_34_50/frame*')
+IMAGES = glob.glob('C:/Users/your username/visual-hull/the calibration name/frame*')
 print(IMAGES)
 
 

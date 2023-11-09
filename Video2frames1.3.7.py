@@ -20,27 +20,17 @@ import re
 
 
 # Replace 'input_video.mp4' with the path to your input video file
+# input_video_path = 'C:/Users/skippy/Downloads/VID_20230906_182015.mp4'
+input_video_path = 'C:/Users/skippy/Downloads/Art.mp4'
 
-
-# Set 1 if calibration checkboard, 0 if object and aruco markers 
-calibrate = 0
-#                        change user or other file directory details HERE
-input_video_path = 'C:/Users/your username/visual-hull/videos/your video name'
-device_name = 'SonyA7'
-
-if calibrate == False:
-    object_name = 'ball'
-else:
-    checkerboard_size = '9x16'
-
-
+Calibrate = 0
 
 # Get the current date and time
 current_date = datetime.date.today()
 current_time = datetime.datetime.now().strftime('%H:%M:%S')
 
 # Combine the date and time components
-filename = f"{current_date}"
+filename = f"{current_date}{current_time}"
 
 # Define a regex pattern to remove characters not allowed in Windows filenames
 # Windows disallows characters like \ / : * ? " < > |
@@ -51,10 +41,10 @@ print(f"Safely formatted filename: {safe_filename}")
 # Replace 'output_folder' with the directory where you want to save the frames
 output_folder = f'Calibrate_output_frames{filename}'
 
-if calibrate == 0:
-    output_folder = f"object_{device_name}_{safe_filename}{object_name}"
+if Calibrate == 0:
+    output_folder = f"Object_images_{safe_filename}"
 else:
-    output_folder = f"calibration_{device_name}_{safe_filename}{checkerboard_size}"
+    output_folder = f"Calibration_{safe_filename}"
 
 
 # Create the output folder if it doesn't exist
@@ -65,7 +55,7 @@ cap = cv2.VideoCapture(input_video_path)
 
 # Initialize a frame counter
 frame_counter = 2
-frameSkip = 10
+frameSkip = 1
 totalframes = 0
 
 # Loop through each frame in the video

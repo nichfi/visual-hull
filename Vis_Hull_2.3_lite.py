@@ -26,7 +26,7 @@ projection_list = []
 aruco_scale = 60 #56.76 # size of aruco markers 
 LC = 10 # resolution for GMSH vertices - only relevant for boolean
 SCALING = 1  # iamge pixel dimension multiplier
-debug_mode = 0
+debug_mode = 1
 
 
 '''
@@ -35,7 +35,7 @@ current repo. Add the folder path with 'object' and 'oneplus' to
 the path, imagename should be a shared initial portion of a string
 followed by the star. (ie IMG*)
 '''
-folder_path = 'C:/Users/nicko/Object_images_2023-10-1721_26_44/'
+folder_path = 'C:/Users/skippy/visual-hull/Object_images_2023-11-0817_34_47/'
 imagename_pattern = 'frame*'
 
 
