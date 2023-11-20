@@ -35,7 +35,7 @@ current repo. Add the folder path with 'object' and 'oneplus' to
 the path, imagename should be a shared initial portion of a string
 followed by the star. (ie IMG*)
 '''
-folder_path = 'C:/Users/skippy/visual-hull/Object_images_2023-11-0817_34_47/'
+folder_path = 'C:/Users/skippy/visual-hull/Object_images_2023-11-1918_02_37/'
 imagename_pattern = 'frame*'
 
 
@@ -55,21 +55,20 @@ including the name'oneplus'.  To recreate, go to the checker calib file.
 #                  -0.0002072655617462208, 0.0006906692231601624, 
 #                  0.5017724257813853], dtype='float32')
 
-# Preset for Solidworks video outputs
-CMTX = np.array([1892.6743149817203, 0.0, 840.0250608153973, 0.0, 
-                 1892.7045637145145, 648.2388916667707, 0.0, 0.0, 1.0], 
-                dtype='float32').reshape(3, 3)
+# 10.8 camera vairables
+# CMTX = np.array([616.7950093055771, 0.0, 384.2013325374104, 0.0, 617.1632902509295, 206.78916725235015, 0.0, 0.0, 1.0], dtype='float32').reshape(3, 3)
+# DIST = np.array([-0.03961588297262229, 0.057116105263951215, -0.001310254036111864, 0.0007219910307744435, -0.06596058534507027], dtype='float32')
+# # virtual camera variables
+CMTX = np.array([1892.6743149817203, 0.0, 840.0250608153973, 0.0, 1892.7045637145145, 648.2388916667707, 0.0, 0.0, 1.0], dtype='float32').reshape(3, 3)
 DIST = np.array([0, 0, 0, 0, 0], dtype='float32')
 
 
 '''
 These are the the real world coordinates for aruco corner locations 
 in mm.  These are set to work with all github files including the 
-name 'object'. Commented out is purely for visual simplicity, all
-code can be active.
+name 'object'
 '''
 aruco_points = {
-    
     # 39: np.array([[32.5,-32.5,-2.5],[32.5,32.5,-2.5],[32.5,-32.5,-62.5],
     #               [32.5,32.5,-62.5]], dtype='float32'),
     # 40: np.array([[32.5,32.5,-2.5],[-32.5,32.5,-2.5],[32.5,32.5,-62.5],
@@ -82,15 +81,14 @@ aruco_points = {
     20: np.array([[-5.02,47.44,1.06],[-47.44,5.02,1.06],[-77.44,35.02,-41.37],
                   [-35.02,77.44,-41.37]],dtype='float32'),
     
-    21: np.array([[-47.44,-5.02,1.06],[-5.02,-47.44,1.06],
-                  [-35.02,-77.44,-41.37],[-77.44,-35.02,-41.37]],
-                 dtype='float32'),
+    21: np.array([[-47.44,-5.02,1.06],[-5.02,-47.44,1.06],[-35.02,-77.44,-41.37],
+                  [-77.44,-35.02,-41.37]],dtype='float32'),
 
     22: np.array([[5.02,-47.44,1.06],[47.44,-5.02,1.06],[77.44,-35.02,-41.37],
                   [35.02,-77.44,-41.37]],dtype='float32'),
 
-    23: np.array([[47.44,5.02,1.06],[5.02,47.44,1.06],[35.02,77.44,-41.37],
-                  [77.44,35.02,-41.37]],dtype='float32'),
+    23: np.array([[47.44,5.02,1.06],[5.02,47.44,1.06],[35.02,77.44,-41.37],[77.44,35.02,-41.37]],dtype='float32'),
+
 
     }
 
@@ -150,12 +148,12 @@ def find_contours(imagename,debug_mode):
     width = int(img.shape[1] )
     height = int(img.shape[0] )
     
-    # currently thresholding twice 
-    # thresholded = cv.adaptiveThreshold(img, 255, 
-    #                                    cv.ADAPTIVE_THRESH_GAUSSIAN_C,
-    #                                    cv.THRESH_BINARY, 21, -5)
-    ret, thresholded = cv.threshold(img, 0, 255,
-                                    cv.THRESH_BINARY + cv.THRESH_OTSU)
+    #currently thresholding twice 
+    # thresholded = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C,
+    #                                     cv.THRESH_BINARY, 11, 2)
+    # ret, thresholded = cv.threshold(img, 150, 255,
+    #                                 cv.THRESH_BINARY + cv.THRESH_OTSU)
+    ret, thresholded = cv.threshold(img, 130, 255, cv.THRESH_BINARY)
    
     # Inversion needed for contour detection to work
     thresholded = cv.bitwise_not(thresholded)
@@ -181,8 +179,7 @@ def find_contours(imagename,debug_mode):
     # print("cenbtroid list", centroid_list)
     # print(x, "X")
     if debug_mode ==  2:
-        print(min(centroid_list),
-              f"Minimum centroid distance to center (ID: {x})")
+        print(min(centroid_list),f"Minimum centroid distance to center (ID: {x})")
     coords = list(zip(contours[x][:, 0][:, 0], contours[x][:, 0][:, 1]))
 
     
@@ -198,7 +195,7 @@ def find_contours(imagename,debug_mode):
 
 # Combines aruco location data 
 def multi_pose_estimator(ids):
-    # Initialize lists to store matched image points and real object points
+    # Initialize lists to store matched image points and correspondi0ng object points
     matched_image_points = []
     matched_object_points = []
 
@@ -211,14 +208,14 @@ def multi_pose_estimator(ids):
     for i, value in enumerate(key_list):
         if value in ids:
             
-            # Get the index of the ids that matches the aruco_id list value
+            # Get the index of the ids array that matches the aruco_id list value
             marker_index = np.where(ids == value)[0][0]
 
-            # extract corner value corresponding to the id and aruco_id value
+            # extract the corners value corresponding to the ids array and aruco_id value
             marker_corners = corners[marker_index][0]
             # print(ids[marker_index])
             # print(marker_corners )
-            # Get the 3D coordinates from aruco_points dictionary
+            # Get the 3D coordinates from the aruco_points dictionary treating the value as the key
             aruco_object_points = aruco_points[value]
             # print (value)
             # print(aruco_object_points)
@@ -231,7 +228,8 @@ def multi_pose_estimator(ids):
     matched_image_points = np.array(matched_image_points, dtype=np.float32)
     matched_object_points = np.array(matched_object_points, dtype=np.float32)
 
-    #reshape to 2d arrays - REQUIRED for solvePNP to work correctly
+    #reshape to 2d arrays, points should still be in the correct order.  THIS  FOrotation_matrx IS 
+    #REQUIRED for solvePNP to work correctly and process all objects into the alg
     shaper = (matched_image_points.shape[0])*4
     reshaped_array_img = np.reshape(matched_image_points , (shaper, 2))
     reshaped_array_obj = np.reshape(matched_object_points , (shaper, 3))
@@ -254,12 +252,11 @@ def pnp_solver():
     rotation_matrx = cv.Rodrigues(rotation_vector)[0]
     
     #CaLCulates camera position from rotation matrix and translation vector
-    camera_position_pnp = np.array(-np.matrix(rotation_matrx).T * 
-                                   np.matrix(translation_vect))
+    camera_position_pnp = np.array(-np.matrix(rotation_matrx).T * np.matrix(translation_vect))
     
-    # creates cam projection matrix from multiplying camera calibration matrix 
-    H = CMTX @ np.column_stack((rotation_matrx[:, 0], rotation_matrx[:, 1], 
-                                translation_vect[:, 0]))
+    #creates Camera projection matrix from multiplying camera calibration matrix by the first two columns 
+    #of the rotation matrix and 1st column of translation vector
+    H = CMTX @ np.column_stack((rotation_matrx[:, 0], rotation_matrx[:, 1], translation_vect[:, 0]))
     return H,camera_position_pnp,rotation_matrx,translation_vect,rotation_vector
 
 
@@ -496,6 +493,7 @@ for index, image_path in enumerate(image_paths):
     
 
     if ids is None:
+        print("no id's found")
         continue
     # Try to locate an acceptable contour
     try:
@@ -506,12 +504,24 @@ for index, image_path in enumerate(image_paths):
         continue
     
     # Append all marker data and package for solvepnp
-    reshaped_array_img, reshaped_array_obj = multi_pose_estimator(ids)
+    try:
+        reshaped_array_img, reshaped_array_obj = multi_pose_estimator(ids)
+    except:
+        print('(',image_path,'):multi_pose_estimator error')
+        print()
+        continue
     # Solvepnp
-    H,camera_position_pnp,rotation_matrx,translation_vect,rotation_vector = pnp_solver()
+    print("TESTT")
+    try:
+        H,camera_position_pnp,rotation_matrx,translation_vect,rotation_vector = pnp_solver()
+    except:
+        print('(',image_path,'):pnp_solver error')
+        print()
+        continue
+    print("TESTT")
     # transformn to real world coordinate system
     unit_vector_list,cam_world  = dimensional_transforms_contours(contour_points)
-
+    print("TESTTT")
     # CaLCulate the ray between the center_point and cam_world
     center_point = [[0], [0], [0]]
     ray_vector = cam_world - center_point
@@ -573,6 +583,7 @@ for index, image_path in enumerate(image_paths):
   
     v2 = msh.model.occ.intersect([(3,v1)],[(3,v)],removeObject= True,
                                         removeTool = True)
+    print("boolean passed")
         
      
 

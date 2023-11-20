@@ -21,7 +21,7 @@ import re
 
 # Replace 'input_video.mp4' with the path to your input video file
 # input_video_path = 'C:/Users/skippy/Downloads/VID_20230906_182015.mp4'
-input_video_path = 'C:/Users/skippy/Art.mp4'
+input_video_path = 'C:/Users/skippy/Aruco_polyhedron._top360.mp4'
 
 Calibrate = 0
 
@@ -55,7 +55,7 @@ cap = cv2.VideoCapture(input_video_path)
 
 # Initialize a frame counter
 frame_counter = 2
-frameSkip = 10
+frameSkip = 1
 totalframes = 0
 
 # Loop through each frame in the video
